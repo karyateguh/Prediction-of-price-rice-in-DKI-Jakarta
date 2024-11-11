@@ -1,4 +1,4 @@
-# Report of Prediction of Price RIce in DKI Jakarta.ipynb
+# Report of Prediction of Price RIce in DKI Jakarta
 
 Original file is located at
     https://colab.research.google.com/drive/1buSHtMxcATqnI-SPmMWQREp8r8jmzd-y?usp=sharing 
@@ -73,7 +73,70 @@ I separate the dataset into 3 by its quality: Raw data, Clean data and Final dat
 **Final Data**, which can be downloaded from [this link](https://drive.google.com/file/d/1f9N-A84c6sqYYCXS6xS_KFqlyO9nWbZh/view?usp=sharing). Final Data only consists of three columns: date(index), beras_premium, and beras_medium, after being deleted before. 37 of each missing data have been interpolated. This work uses this dataset to analyse.
 
 
-The process of data cleaning can be seen in [here](https://colab.research.google.com/drive/1cC9BiFrd39MzEjDHWuYEs3jc72zOuCVo?usp=sharing).
+The process of data cleaning can be seen in [here](https://colab.research.google.com/drive/1cC9BiFrd39MzEjDHWuYEs3jc72zOuCVo?usp=sharing). 
+
+### Convert data to integer and transpose it 
+
+The given code is essential for cleaning and transforming a transposed DataFrame, ensuring that all values are converted to integers while handling any non-numeric entries.
+
+**Data Transposition:** The process begins with df_transposed = df.T, where .T transposes df, switching rows and columns. This transposition enables easier data handling, especially when certain operations require access to columns that were originally rows.
+
+**Setting Column Names:** The line df_transposed.columns = df_transposed.iloc[0] assigns the first row of df_transposed as the new header. By doing this, we designate the initial row (iloc[0]) as column names. The line df_transposed = df_transposed[1:] then removes this now redundant row from the data, leaving the transposed DataFrame ready for further processing.
+
+**Integer Conversion Process:** The function convert_to_int(df_transposed) performs several operations:
+
+String Conversion: df.astype(str) converts each element in the DataFrame to a string, allowing easy manipulation using string functions.
+Removing Periods: The lambda function x.str.replace('.', '', regex=False) eliminates periods from the strings, handling cases where they might represent thousands separators.
+Numeric Conversion: pd.to_numeric(..., errors='coerce') then converts these strings to numeric values, marking non-convertible entries (e.g., words) as NaN.
+Integer Conversion: Finally, .astype('Int64') casts the data to the Int64 type, a pandas integer format that can handle missing values (shown as <NA>).
+Error Management and Data Integrity
+Using errors='coerce' allows the conversion to proceed without issues if any non-numeric values are present. Entries that can’t be converted are set to <NA>, preserving data integrity and avoiding errors. This approach is particularly useful for datasets with formatting inconsistencies, common in financial or time series data where numeric values might have thousands separators or non-numeric elements.
+
+The code performs essential data transformation and cleaning to standardize values for analysis, making the dataset more reliable by addressing common inconsistencies—an essential step in preprocessing for large datasets (Pandas Documentation, 2023).
+
+### Drop unnecessary columns
+
+The code snippet in here performs column removal on the df_transposed DataFrame by specifying a list of column names that should be dropped. Here’s a detailed breakdown of what each part does:
+
+Define Columns to Drop: The columns_to_drop list includes the names of columns in df_transposed that are to be removed. These columns represent various commodity names like 'Kedelai Biji Kering (Impor)', 'Bawang Merah', 'Daging Sapi Murni', etc., possibly because they are not needed for further analysis or might be irrelevant to the study's focus.
+
+Dropping Specified Columns:
+
+df_transposed.drop(columns=columns_to_drop, inplace=True)
+The drop() method removes the columns listed in columns_to_drop from df_transposed. The columns=columns_to_drop parameter specifically indicates that the drop operation targets columns (not rows). Setting inplace=True modifies df_transposed directly without creating a new DataFrame.
+
+**Usage Context and Benefits**
+By removing unnecessary or irrelevant columns, this code helps reduce memory usage and computational overhead, making the dataset easier to work with and more focused on relevant variables. This is especially useful in time series or forecasting tasks where including irrelevant features could introduce noise and negatively impact model performance or analysis quality.
+
+
+
+### Interpolate the missing data
+
+The code df_transposed = df_transposed.interpolate(method='linear') applies linear interpolation to fill missing values in the df_transposed DataFrame. Linear interpolation estimates missing values by drawing a straight line between the surrounding known data points.
+
+
+Linear interpolation is used when the data is expected to change gradually and predictably over time. By filling in missing values with estimates based on surrounding data points, it ensures that the dataset remains continuous and does not lose valuable information. This is especially useful in time series data, where gaps in the data can affect analysis and predictions.
+
+**Why Use This Method?**
+Linear interpolation is simple and effective for data with gradual trends. It helps preserve the integrity of the data without introducing artificial patterns. However, it may not be suitable for data with sharp fluctuations or non-linear trends, where other interpolation methods might be more appropriate (Pandas Documentation, 2023).
+
+
+### Rename column and adjust date
+
+**Resetting the Index and Renaming Columns**
+
+The reset_index() function is applied to df_transposed to convert the current index of the DataFrame into a regular column. This operation is useful when the index holds meaningful information, such as dates or categories, that should be part of the data itself rather than as the index. The rename(columns={...}) function then renames specific columns for clarity and consistency.
+
+The index column, now created by reset_index(), is renamed to date.
+The column 'Beras Premium' is renamed to beras_premium and 'Beras Medium' to beras_medium.
+This step ensures that the DataFrame has clear and consistent column names, improving the ease of use during analysis or modeling tasks.
+
+**Converting the Date Column to Datetime Format**
+
+The line df_final['date'] = pd.to_datetime(df_final['date'], format='%d/%m/%Y') converts the date column, which is initially in string format, into a proper pandas datetime object. This conversion is essential for any time series analysis, as it allows the dataset to be used in time-based calculations or visualizations.
+
+The format='%d/%m/%Y' argument specifies the exact format of the date string, which is day/month/year. By doing this, pandas ensures that the string is correctly interpreted as a date without errors.
+
 
 ## Explanatory Data Analysis [EDA]
 
@@ -166,7 +229,7 @@ test_size=0.2: This specifies that 20% of the data will be set aside as the test
 
 shuffle=False: For time series data, it is crucial to maintain the chronological order of observations. Shuffling would disrupt this order, potentially causing data leakage (where future data is inadvertently used to predict past values). Setting shuffle=False ensures that the training set consists of earlier data points and the test set consists of later points.
 
-#Model 1 : Model Sequential using LSTM
+# Model 1 : Model Sequential using LSTM
 
 ## Modelling
 
@@ -187,14 +250,9 @@ Dense Layer:
 
 **Dense(1)**: This fully connected layer provides the final output, a single value predicting the next time step in the series. This layer is common in regression-based time series forecasting, where the goal is to predict a continuous value.
 
-
-## Compiling the Model
-
 **Optimizer:** adam (adaptive moment estimation) is a popular optimizer that adjusts the learning rate dynamically, which often leads to faster convergence, especially for LSTM models handling complex time dependencies (Kingma & Ba, 2015).
 
 **Loss Function:** mean_squared_error is used because it’s a standard loss function for regression tasks, penalizing large prediction errors and aiming to minimize the average of squared differences between actual and predicted values.
-
-## Callbacks for Training Optimization
 
 **EarlyStopping:** This callback monitors the val_loss (validation loss) and stops training if there’s no improvement for 10 consecutive epochs. It prevents overfitting by halting training once the model stops improving on the validation data.
 
@@ -265,24 +323,22 @@ The model’s performance results are as follows:
 
 > Test Root Mean Squared Error (RMSE): 220.34 Rp
 
+The standard LSTM model shows reasonably good training accuracy but experiences a larger increase in error on the test data, indicating potential overfitting. The LSTM structure captures temporal dependencies but struggles to generalize well enough for future data points.
+
+**Strengths:** LSTMs are highly capable of capturing sequential dependencies and handling nonlinear relationships in time series data, making them a good choice for non-seasonal industrial data.
+
+**Weaknesses:** Standard LSTM only processes information in one direction (forward), which can limit its understanding of complex time dependencies. This model shows signs of overfitting, with a higher testing error than training error.
+
 
 # Model 2 Using Bidirectional LSTM
 
 ## Modelling
 
 * The model model2 consists of a Bidirectional LSTM layer with 100 units, set to return sequences (i.e., all hidden states) for additional layers to process.
-
 * The second Bidirectional LSTM layer has return_sequences=False because it outputs the final hidden state, which is then connected to a fully connected layer with a single unit (for a single value prediction).
-
 * Dropout layers are added between the LSTM layers to mitigate overfitting by randomly setting some units to zero during training.
-
-## Compilling the model
-
 * The lr_schedule function adjusts the learning rate after 20 epochs, reducing it by a factor of 0.1. This learning rate decay can help the model converge to a minimum with more stability after initial rapid progress.
 * The LearningRateScheduler callback incorporates this schedule into the model’s training loop.
-
-## Callbacks
-
 * EarlyStopping: Monitors val_loss and stops training if it does not improve for 10 epochs. This helps prevent overfitting and saves training time.
 * ModelCheckpoint: Saves the model only when there’s an improvement in val_loss, ensuring that the best-performing model on validation data is saved.
 * LearningRateScheduler: Dynamically adjusts the learning rate during training, which can help the model converge more effectively and avoid getting stuck in local minima.
@@ -310,18 +366,19 @@ The results show improvements in both the training and testing errors:
 
 > Train Mean Absolute Error (MAE): 88.62 Rp
 
-
 > Test Mean Absolute Error (MAE): 127.66 Rp
 
-
-
 > Train Root Mean Squared Error (RMSE): 158.80 Rp
-
-
 
 > Test Root Mean Squared Error (RMSE): 177.12 Rp
 
 These values indicate that the bidirectional LSTM model, along with some adjustments, has enhanced the model's performance compared to earlier configurations.
+
+The Bidirectional LSTM outperforms the standard LSTM, showing both lower training and testing errors. The train-test error gap is smaller than in Model 1, suggesting better generalization. This bidirectional model captures dependencies from both past and future contexts at each time step, leading to a richer representation of the data and improved predictive performance. 
+
+**Strengths:** By processing information in both directions, this model captures forward and backward dependencies. This dual processing leads to improved accuracy, especially when complex temporal relationships exist. As evidenced by the lower errors, Bidirectional LSTM is better suited for industrial time series where both past and future patterns influence outcomes.
+
+**Weaknesses:** Bidirectional LSTM models are computationally more intensive and require more resources. They may also be harder to interpret compared to simpler models like ARIMA.
 
 
 
@@ -379,64 +436,12 @@ The choice of MSE and RMSE as evaluation metrics is common in time series foreca
 
 > Root Mean Squared Error (RMSE): 140.89
 
-# Comparison
-
-Based on the performance metrics, Model 2 (Bidirectional LSTM) demonstrates the best predictive capabilities for time series data related to industrial applications. When comparing the models across both training and testing errors, Model 2 consistently exhibits lower error values than Model 1 (standard LSTM) and Model 3 (ARIMA). Here’s a breakdown of each model’s results and why Model 2 is the optimal choice.
-
-## **Performance Analysis**
-
-**Model 1: LSTM**
-
-Train MAE: 99.52 Rp
-
-Test MAE: 151.54 Rp
-
-Train RMSE: 179.06 Rp
-
-Test RMSE: 220.34 Rp
-
-The standard LSTM model shows reasonably good training accuracy but experiences a larger increase in error on the test data, indicating potential overfitting. The LSTM structure captures temporal dependencies but struggles to generalize well enough for future data points.
-
-**Model 2: Bidirectional LSTM**
-
-Train MAE: 88.62 Rp
-
-Test MAE: 127.66 Rp
-
-Train RMSE: 158.80 Rp
-
-Test RMSE: 177.12 Rp
-
-
-The Bidirectional LSTM outperforms the standard LSTM, showing both lower training and testing errors. The train-test error gap is smaller than in Model 1, suggesting better generalization. This bidirectional model captures dependencies from both past and future contexts at each time step, leading to a richer representation of the data and improved predictive performance.
-
-**Model 3: ARIMA**
-
-MSE: 19849.31
-
-RMSE: 140.89
-
 The ARIMA model has a lower RMSE than Model 1's test RMSE but does not match the accuracy of the Bidirectional LSTM model. Although ARIMA is strong for linear, seasonal, or stationary data, its performance here is weaker, likely because the dataset’s industrial context includes nonlinear and complex temporal dependencies that neural networks like LSTM are better equipped to handle.
-
-## **Strengths and Weaknesses of Each Model**
-
-**Model 1: Standard LSTM**
-
-**Strengths:** LSTMs are highly capable of capturing sequential dependencies and handling nonlinear relationships in time series data, making them a good choice for non-seasonal industrial data.
-
-**Weaknesses:** Standard LSTM only processes information in one direction (forward), which can limit its understanding of complex time dependencies. This model shows signs of overfitting, with a higher testing error than training error.
-
-**Model 2: Bidirectional LSTM**
 
 **Strengths:** By processing information in both directions, this model captures forward and backward dependencies. This dual processing leads to improved accuracy, especially when complex temporal relationships exist. As evidenced by the lower errors, Bidirectional LSTM is better suited for industrial time series where both past and future patterns influence outcomes.
 
 **Weaknesses:** Bidirectional LSTM models are computationally more intensive and require more resources. They may also be harder to interpret compared to simpler models like ARIMA.
 
-**Model 3: ARIMA**
-
-**Strengths:** ARIMA is interpretable and effective for simpler time series data with clear seasonality and linear trends. It’s computationally efficient and easy to deploy in scenarios where data relationships are simpler and more predictable.
-
-**Weaknesses:** ARIMA does not handle nonlinear dependencies well, which limits its performance in datasets with complex industrial patterns. It requires the data to be stationary, which is not always feasible in real-world applications.
 
 # Conclusion
 

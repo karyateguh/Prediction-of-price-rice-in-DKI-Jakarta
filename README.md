@@ -80,11 +80,11 @@ I separate the dataset into 3 by its quality: Raw data, Clean data and Final dat
 
 The given code is essential for cleaning and transforming a transposed DataFrame, ensuring that all values are converted to integers while handling any non-numeric entries.
 
-Data Transposition: The process begins with df_transposed = df.T, where .T transposes df, switching rows and columns. This transposition enables easier data handling, especially when certain operations require access to columns that were originally rows.
+* Data Transposition: The process begins with df_transposed = df.T, where .T transposes df, switching rows and columns. This transposition enables easier data handling, especially when certain operations require access to columns that were originally rows.
 
-Setting Column Names: The line df_transposed.columns = df_transposed.iloc[0] assigns the first row of df_transposed as the new header. By doing this, we designate the initial row (iloc[0]) as column names. The line df_transposed = df_transposed[1:] then removes this now redundant row from the data, leaving the transposed DataFrame ready for further processing.
+* Setting Column Names: The line df_transposed.columns = df_transposed.iloc[0] assigns the first row of df_transposed as the new header. By doing this, we designate the initial row (iloc[0]) as column names. The line df_transposed = df_transposed[1:] then removes this now redundant row from the data, leaving the transposed DataFrame ready for further processing.
 
-Integer Conversion Process: The function convert_to_int(df_transposed) performs several operations:
+* Integer Conversion Process: The function convert_to_int(df_transposed) performs several operations:
 
 String Conversion: df.astype(str) converts each element in the DataFrame to a string, allowing easy manipulation using string functions.
 Removing Periods: The lambda function x.str.replace('.', '', regex=False) eliminates periods from the strings, handling cases where they might represent thousands separators.
@@ -99,14 +99,14 @@ The code performs essential data transformation and cleaning to standardize valu
 
 The code snippet in here performs column removal on the df_transposed DataFrame by specifying a list of column names that should be dropped. Here’s a detailed breakdown of what each part does:
 
-Define Columns to Drop: The columns_to_drop list includes the names of columns in df_transposed that are to be removed. These columns represent various commodity names like 'Kedelai Biji Kering (Impor)', 'Bawang Merah', 'Daging Sapi Murni', etc., possibly because they are not needed for further analysis or might be irrelevant to the study's focus.
+* Define Columns to Drop: The columns_to_drop list includes the names of columns in df_transposed that are to be removed. These columns represent various commodity names like 'Kedelai Biji Kering (Impor)', 'Bawang Merah', 'Daging Sapi Murni', etc., possibly because they are not needed for further analysis or might be irrelevant to the study's focus.
 
-Dropping Specified Columns:
+* Dropping Specified Columns:
 
 df_transposed.drop(columns=columns_to_drop, inplace=True)
 The drop() method removes the columns listed in columns_to_drop from df_transposed. The columns=columns_to_drop parameter specifically indicates that the drop operation targets columns (not rows). Setting inplace=True modifies df_transposed directly without creating a new DataFrame.
 
-Usage Context and Benefits
+**Usage Context and Benefits**
 By removing unnecessary or irrelevant columns, this code helps reduce memory usage and computational overhead, making the dataset easier to work with and more focused on relevant variables. This is especially useful in time series or forecasting tasks where including irrelevant features could introduce noise and negatively impact model performance or analysis quality.
 
 
@@ -124,7 +124,7 @@ Linear interpolation is simple and effective for data with gradual trends. It he
 
 ### Rename column and adjust date
 
-**Resetting the Index and Renaming Columns**
+* Resetting the Index and Renaming Columns
 
 The reset_index() function is applied to df_transposed to convert the current index of the DataFrame into a regular column. This operation is useful when the index holds meaningful information, such as dates or categories, that should be part of the data itself rather than as the index. The rename(columns={...}) function then renames specific columns for clarity and consistency.
 
@@ -132,7 +132,7 @@ The index column, now created by reset_index(), is renamed to date.
 The column 'Beras Premium' is renamed to beras_premium and 'Beras Medium' to beras_medium.
 This step ensures that the DataFrame has clear and consistent column names, improving the ease of use during analysis or modeling tasks.
 
-**Converting the Date Column to Datetime Format**
+* Converting the Date Column to Datetime Format
 
 The line df_final['date'] = pd.to_datetime(df_final['date'], format='%d/%m/%Y') converts the date column, which is initially in string format, into a proper pandas datetime object. This conversion is essential for any time series analysis, as it allows the dataset to be used in time-based calculations or visualizations.
 
@@ -145,6 +145,7 @@ The format='%d/%m/%Y' argument specifies the exact format of the date string, wh
 
 ![Plot Line](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/1.%20Plot%20Line.png)
 
+There is almost no difference about beras_premium and beras_medium plot. They differ in price. 
 
 ### 2. Histogram and KDE Plot
 
@@ -157,10 +158,12 @@ Thing that we can note from above is, beras_premium and beras_medium have simill
 
 ![Box Plot For Outliers](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/3.%20Box%20Plot%20For%20Outliers.png)
 
+In 2023, the price rice has a significant rising.
 
 ### 4. Decompose Time Series
 
 ![Decompose Time Series](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/4.%20Decompose%20Time%20Series.png)
+
 
 
 ### 5. ACF and PACF Plots
@@ -335,7 +338,7 @@ The standard LSTM model shows reasonably good training accuracy but experiences 
 
 ## Modelling
 
-* The model model2 consists of a Bidirectional LSTM layer with 100 units, set to return sequences (i.e., all hidden states) for additional layers to process.
+* The model2 consists of a Bidirectional LSTM layer with 100 units, set to return sequences (i.e., all hidden states) for additional layers to process.
 * The second Bidirectional LSTM layer has return_sequences=False because it outputs the final hidden state, which is then connected to a fully connected layer with a single unit (for a single value prediction).
 * Dropout layers are added between the LSTM layers to mitigate overfitting by randomly setting some units to zero during training.
 * The lr_schedule function adjusts the learning rate after 20 epochs, reducing it by a factor of 0.1. This learning rate decay can help the model converge to a minimum with more stability after initial rapid progress.

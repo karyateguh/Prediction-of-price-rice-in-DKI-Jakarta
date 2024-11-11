@@ -72,8 +72,9 @@ I separate the dataset into 3 by its quality: Raw data, Clean data and Final dat
 
 **Final Data**, which can be downloaded from [this link](https://drive.google.com/file/d/1f9N-A84c6sqYYCXS6xS_KFqlyO9nWbZh/view?usp=sharing). Final Data only consists of three columns: date(index), beras_premium, and beras_medium, after being deleted before. 37 of each missing data have been interpolated. This work uses this dataset to analyse.
 
+# Data Preparation
 
-The process of data cleaning can be seen in [here](https://colab.research.google.com/drive/1cC9BiFrd39MzEjDHWuYEs3jc72zOuCVo?usp=sharing). 
+## Data Cleaning
 
 ### Convert data to integer and transpose it 
 

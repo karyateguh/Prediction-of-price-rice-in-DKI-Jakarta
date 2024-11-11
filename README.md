@@ -90,7 +90,8 @@ String Conversion: df.astype(str) converts each element in the DataFrame to a st
 Removing Periods: The lambda function x.str.replace('.', '', regex=False) eliminates periods from the strings, handling cases where they might represent thousands separators.
 Numeric Conversion: pd.to_numeric(..., errors='coerce') then converts these strings to numeric values, marking non-convertible entries (e.g., words) as NaN.
 Integer Conversion: Finally, .astype('Int64') casts the data to the Int64 type, a pandas integer format that can handle missing values (shown as <NA>).
-Error Management and Data Integrity
+
+* Error Management and Data Integrity
 Using errors='coerce' allows the conversion to proceed without issues if any non-numeric values are present. Entries that can’t be converted are set to <NA>, preserving data integrity and avoiding errors. This approach is particularly useful for datasets with formatting inconsistencies, common in financial or time series data where numeric values might have thousands separators or non-numeric elements.
 
 The code performs essential data transformation and cleaning to standardize values for analysis, making the dataset more reliable by addressing common inconsistencies—an essential step in preprocessing for large datasets (Pandas Documentation, 2023).
@@ -101,24 +102,22 @@ The code snippet in here performs column removal on the df_transposed DataFrame 
 
 * Define Columns to Drop: The columns_to_drop list includes the names of columns in df_transposed that are to be removed. These columns represent various commodity names like 'Kedelai Biji Kering (Impor)', 'Bawang Merah', 'Daging Sapi Murni', etc., possibly because they are not needed for further analysis or might be irrelevant to the study's focus.
 
-* Dropping Specified Columns:
-
-df_transposed.drop(columns=columns_to_drop, inplace=True)
+* Dropping Specified Columns: df_transposed.drop(columns=columns_to_drop, inplace=True)
 The drop() method removes the columns listed in columns_to_drop from df_transposed. The columns=columns_to_drop parameter specifically indicates that the drop operation targets columns (not rows). Setting inplace=True modifies df_transposed directly without creating a new DataFrame.
 
 **Usage Context and Benefits**
-By removing unnecessary or irrelevant columns, this code helps reduce memory usage and computational overhead, making the dataset easier to work with and more focused on relevant variables. This is especially useful in time series or forecasting tasks where including irrelevant features could introduce noise and negatively impact model performance or analysis quality.
 
+By removing unnecessary or irrelevant columns, this code helps reduce memory usage and computational overhead, making the dataset easier to work with and more focused on relevant variables. This is especially useful in time series or forecasting tasks where including irrelevant features could introduce noise and negatively impact model performance or analysis quality.
 
 
 ### Interpolate the missing data
 
 The code df_transposed = df_transposed.interpolate(method='linear') applies linear interpolation to fill missing values in the df_transposed DataFrame. Linear interpolation estimates missing values by drawing a straight line between the surrounding known data points.
 
-
 Linear interpolation is used when the data is expected to change gradually and predictably over time. By filling in missing values with estimates based on surrounding data points, it ensures that the dataset remains continuous and does not lose valuable information. This is especially useful in time series data, where gaps in the data can affect analysis and predictions.
 
 **Why Use This Method?**
+
 Linear interpolation is simple and effective for data with gradual trends. It helps preserve the integrity of the data without introducing artificial patterns. However, it may not be suitable for data with sharp fluctuations or non-linear trends, where other interpolation methods might be more appropriate (Pandas Documentation, 2023).
 
 
@@ -163,7 +162,6 @@ In 2023, the price rice has a significant rising.
 ### 4. Decompose Time Series
 
 ![Decompose Time Series](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/4.%20Decompose%20Time%20Series.png)
-
 
 
 ### 5. ACF and PACF Plots

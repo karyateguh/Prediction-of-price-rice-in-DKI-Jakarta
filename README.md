@@ -440,9 +440,9 @@ The choice of MSE and RMSE as evaluation metrics is common in time series foreca
 
 The ARIMA model has a lower RMSE than Model 1's test RMSE but does not match the accuracy of the Bidirectional LSTM model. Although ARIMA is strong for linear, seasonal, or stationary data, its performance here is weaker, likely because the dataset’s industrial context includes nonlinear and complex temporal dependencies that neural networks like LSTM are better equipped to handle.
 
-**Strengths:** By processing information in both directions, this model captures forward and backward dependencies. This dual processing leads to improved accuracy, especially when complex temporal relationships exist. As evidenced by the lower errors, Bidirectional LSTM is better suited for industrial time series where both past and future patterns influence outcomes.
+**Strengths:** ARIMA is interpretable and effective for simpler time series data with clear seasonality and linear trends. It’s computationally efficient and easy to deploy in scenarios where data relationships are simpler and more predictable.
 
-**Weaknesses:** Bidirectional LSTM models are computationally more intensive and require more resources. They may also be harder to interpret compared to simpler models like ARIMA.
+**Weaknesses:** ARIMA does not handle nonlinear dependencies well, which limits its performance in datasets with complex industrial patterns. It requires the data to be stationary, which is not always feasible in real-world applications.
 
 
 # Conclusion

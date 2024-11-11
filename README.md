@@ -80,11 +80,11 @@ I separate the dataset into 3 by its quality: Raw data, Clean data and Final dat
 
 The given code is essential for cleaning and transforming a transposed DataFrame, ensuring that all values are converted to integers while handling any non-numeric entries.
 
-**Data Transposition:** The process begins with df_transposed = df.T, where .T transposes df, switching rows and columns. This transposition enables easier data handling, especially when certain operations require access to columns that were originally rows.
+Data Transposition: The process begins with df_transposed = df.T, where .T transposes df, switching rows and columns. This transposition enables easier data handling, especially when certain operations require access to columns that were originally rows.
 
-**Setting Column Names:** The line df_transposed.columns = df_transposed.iloc[0] assigns the first row of df_transposed as the new header. By doing this, we designate the initial row (iloc[0]) as column names. The line df_transposed = df_transposed[1:] then removes this now redundant row from the data, leaving the transposed DataFrame ready for further processing.
+Setting Column Names: The line df_transposed.columns = df_transposed.iloc[0] assigns the first row of df_transposed as the new header. By doing this, we designate the initial row (iloc[0]) as column names. The line df_transposed = df_transposed[1:] then removes this now redundant row from the data, leaving the transposed DataFrame ready for further processing.
 
-**Integer Conversion Process:** The function convert_to_int(df_transposed) performs several operations:
+Integer Conversion Process: The function convert_to_int(df_transposed) performs several operations:
 
 String Conversion: df.astype(str) converts each element in the DataFrame to a string, allowing easy manipulation using string functions.
 Removing Periods: The lambda function x.str.replace('.', '', regex=False) eliminates periods from the strings, handling cases where they might represent thousands separators.
@@ -106,7 +106,7 @@ Dropping Specified Columns:
 df_transposed.drop(columns=columns_to_drop, inplace=True)
 The drop() method removes the columns listed in columns_to_drop from df_transposed. The columns=columns_to_drop parameter specifically indicates that the drop operation targets columns (not rows). Setting inplace=True modifies df_transposed directly without creating a new DataFrame.
 
-**Usage Context and Benefits**
+Usage Context and Benefits
 By removing unnecessary or irrelevant columns, this code helps reduce memory usage and computational overhead, making the dataset easier to work with and more focused on relevant variables. This is especially useful in time series or forecasting tasks where including irrelevant features could introduce noise and negatively impact model performance or analysis quality.
 
 

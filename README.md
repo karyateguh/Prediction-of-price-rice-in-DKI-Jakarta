@@ -157,21 +157,30 @@ Thing that we can note from above is, beras_premium and beras_medium have simill
 
 ![Box Plot For Outliers](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/3.%20Box%20Plot%20For%20Outliers.png)
 
-In 2023, the price rice has a significant rising.
+In 2023, the price rice has a significant rising. While in 2024, the price rice is in the highest point. 
 
 ### 4. Decompose Time Series
 
 ![Decompose Time Series](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/4.%20Decompose%20Time%20Series.png)
 
+The data has much noise. To overcome it, we will normalize the data later. 
+
 
 ### 5. ACF and PACF Plots
 
-![ACF and PACF Plot](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/5.%20ACF%20and%20PACF%20Plot.png)
+![ACF and PACF Plot](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/5.%20ACF%20and%20PACF%20Plot.png) 
+
+The data is not stationary. 
 
 
 ### 6. Moving Average and Rolling Statistics
 
 ![Moving Average and Rolling Statistics](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/6.%20Moving%20Average%20and%20Rolling%20Statistics.png)
+
+The Original Series and the 12-Month Moving Average Overlap:
+
+It indicates that the long-term trend in the data is fairly consistent, without sharp rises or falls. So, whatever monthly pattern you see in the original data is likely stable and predictable.
+A near-zero rolling standard deviation means that the data is incredibly stable, almost without any noticeable ups or downs within each yearly period.
 
 ### 7. Stationarity Test (ADF Test)
 

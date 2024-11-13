@@ -80,19 +80,20 @@ I separate the dataset into 3 by its quality: Raw data, Clean data and Final dat
 
 The given code is essential for cleaning and transforming a transposed DataFrame, ensuring that all values are converted to integers while handling any non-numeric entries.
 
-* Data Transposition: The process begins with df_transposed = df.T, where .T transposes df, switching rows and columns. This transposition enables easier data handling, especially when certain operations require access to columns that were originally rows.
+* Data Transposition:
+  The process begins with df_transposed = df.T, where .T transposes df, switching rows and columns. This transposition enables easier data handling, especially when certain operations require access to columns that were originally rows.
 
-* Setting Column Names: The line df_transposed.columns = df_transposed.iloc[0] assigns the first row of df_transposed as the new header. By doing this, we designate the initial row (iloc[0]) as column names. The line df_transposed = df_transposed[1:] then removes this now redundant row from the data, leaving the transposed DataFrame ready for further processing.
+* Setting Column Names:
+  The line df_transposed.columns = df_transposed.iloc[0] assigns the first row of df_transposed as the new header. By doing this, we designate the initial row (iloc[0]) as column names. The line df_transposed = df_transposed[1:] then removes this now redundant row from the data, leaving the transposed DataFrame ready for further processing.
 
 * Integer Conversion Process: The function convert_to_int(df_transposed) performs several operations:
-
-String Conversion: df.astype(str) converts each element in the DataFrame to a string, allowing easy manipulation using string functions.
-Removing Periods: The lambda function x.str.replace('.', '', regex=False) eliminates periods from the strings, handling cases where they might represent thousands separators.
-Numeric Conversion: pd.to_numeric(..., errors='coerce') then converts these strings to numeric values, marking non-convertible entries (e.g., words) as NaN.
-Integer Conversion: Finally, .astype('Int64') casts the data to the Int64 type, a pandas integer format that can handle missing values (shown as <NA>).
+  String Conversion: df.astype(str) converts each element in the DataFrame to a string, allowing easy manipulation using string functions.
+  Removing Periods: The lambda function x.str.replace('.', '', regex=False) eliminates periods from the strings, handling cases where they might represent thousands separators.
+  Numeric Conversion: pd.to_numeric(..., errors='coerce') then converts these strings to numeric values, marking non-convertible entries (e.g., words) as NaN.
+  Integer Conversion: Finally, .astype('Int64') casts the data to the Int64 type, a pandas integer format that can handle missing values (shown as <NA>).
 
 * Error Management and Data Integrity
-Using errors='coerce' allows the conversion to proceed without issues if any non-numeric values are present. Entries that can’t be converted are set to <NA>, preserving data integrity and avoiding errors. This approach is particularly useful for datasets with formatting inconsistencies, common in financial or time series data where numeric values might have thousands separators or non-numeric elements.
+  Using errors='coerce' allows the conversion to proceed without issues if any non-numeric values are present. Entries that can’t be converted are set to <NA>, preserving data integrity and avoiding errors. This approach is particularly useful for datasets with formatting inconsistencies, common in financial or time series data where numeric values might have thousands separators or non-numeric elements.
 
 The code performs essential data transformation and cleaning to standardize values for analysis, making the dataset more reliable by addressing common inconsistencies—an essential step in preprocessing for large datasets (Pandas Documentation, 2023).
 

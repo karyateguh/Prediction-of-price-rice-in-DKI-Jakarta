@@ -112,8 +112,6 @@ The data is not stationary.
 
 ![Moving Average and Rolling Statistics](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/6.%20Moving%20Average%20and%20Rolling%20Statistics.png)
 
-The Original Series and the 12-Month Moving Average Overlap:
-
 It indicates that the long-term trend in the data is fairly consistent, without sharp rises or falls. So, whatever monthly pattern you see in the original data is likely stable and predictable.
 A near-zero rolling standard deviation means that the data is incredibly stable, almost without any noticeable ups or downs within each yearly period.
 
@@ -134,16 +132,19 @@ Critical Value 10%: -2.5682750226211546
 
 ![Seasonal Plot or Heatmap for Seasonality](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/8.%20Seasonal%20Plot%20or%20Heatmap%20for%20Seasonality.png)
 
+The highest price is in March 2024 (17183) and April 2024 (17184). 
 
 ### 9. Lag Plot
 
 ![Seasonal Plot](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/9.%20Seasonal%20Plot.png)
 
+We have positive correlation in it.
 
 ### 10. Change Point Detection
 
 ![Change Point Detection](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/10.%20Change%20Point%20Detection.png)
 
+We have critical point in 2024 January. It is getting worst in February until April. 
 
 # Data Preparation
 
@@ -242,6 +243,28 @@ shuffle=False: For time series data, it is crucial to maintain the chronological
 
 # Model 1 : Model Sequential using LSTM
 
+Train Mean Absolute Error (MAE): 99.52 Rp
+Test Mean Absolute Error (MAE): 151.54 Rp
+Train Root Mean Squared Error (RMSE): 179.06 Rp
+Test Root Mean Squared Error (RMSE): 220.34 Rp
+
+
+The model’s performance results are as follows:
+
+> Train Mean Absolute Error (MAE): 99.52 Rp
+
+> Test Mean Absolute Error (MAE): 151.54 Rp
+
+> Train Root Mean Squared Error (RMSE): 179.06 Rp
+
+> Test Root Mean Squared Error (RMSE): 220.34 Rp
+
+The standard LSTM model shows reasonably good training accuracy but experiences a larger increase in error on the test data, indicating potential overfitting. The LSTM structure captures temporal dependencies but struggles to generalize well enough for future data points.
+
+**Strengths:** LSTMs are highly capable of capturing sequential dependencies and handling nonlinear relationships in time series data, making them a good choice for non-seasonal industrial data.
+
+**Weaknesses:** Standard LSTM only processes information in one direction (forward), which can limit its understanding of complex time dependencies. This model shows signs of overfitting, with a higher testing error than training error.
+
 ## Modelling
 
 **Sequential Model:** The Sequential model in Keras allows us to stack layers linearly, which is ideal for LSTM architectures in time series forecasting.
@@ -295,6 +318,7 @@ The structure and techniques used here are well-suited for time series forecasti
 
 ![LSTM](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/LSTM.png)
 
+The Price rice decreases in the future. But, we can see large deviations on it.
 
 ## Evaluating
 
@@ -322,26 +346,28 @@ Squaring the errors magnifies larger discrepancies between actual and predicted 
 
 rmse_train and rmse_test reflect the standard deviation of the prediction errors, providing insight into how spread out the errors are. Lower RMSE values also indicate better model performance, especially in scenarios where avoiding large errors is crucial.
 
-**Result**
 
-The model’s performance results are as follows:
-
-> Train Mean Absolute Error (MAE): 99.52 Rp
-
-> Test Mean Absolute Error (MAE): 151.54 Rp
-
-> Train Root Mean Squared Error (RMSE): 179.06 Rp
-
-> Test Root Mean Squared Error (RMSE): 220.34 Rp
-
-The standard LSTM model shows reasonably good training accuracy but experiences a larger increase in error on the test data, indicating potential overfitting. The LSTM structure captures temporal dependencies but struggles to generalize well enough for future data points.
-
-**Strengths:** LSTMs are highly capable of capturing sequential dependencies and handling nonlinear relationships in time series data, making them a good choice for non-seasonal industrial data.
-
-**Weaknesses:** Standard LSTM only processes information in one direction (forward), which can limit its understanding of complex time dependencies. This model shows signs of overfitting, with a higher testing error than training error.
 
 
 # Model 2 Using Bidirectional LSTM
+
+
+> Train Mean Absolute Error (MAE): 88.62 Rp
+
+> Test Mean Absolute Error (MAE): 127.66 Rp
+
+> Train Root Mean Squared Error (RMSE): 158.80 Rp
+
+> Test Root Mean Squared Error (RMSE): 177.12 Rp
+
+These values indicate that the bidirectional LSTM model, along with some adjustments, has enhanced the model's performance compared to earlier configurations.
+
+The Bidirectional LSTM outperforms the standard LSTM, showing both lower training and testing errors. The train-test error gap is smaller than in Model 1, suggesting better generalization. This bidirectional model captures dependencies from both past and future contexts at each time step, leading to a richer representation of the data and improved predictive performance. 
+
+**Strengths:** By processing information in both directions, this model captures forward and backward dependencies. This dual processing leads to improved accuracy, especially when complex temporal relationships exist. As evidenced by the lower errors, Bidirectional LSTM is better suited for industrial time series where both past and future patterns influence outcomes.
+
+**Weaknesses:** Bidirectional LSTM models are computationally more intensive and require more resources. They may also be harder to interpret compared to simpler models like ARIMA.
+
 
 ## Modelling
 
@@ -367,33 +393,24 @@ The predicting process is simiilar to model 1
 
 ![Bidirectional](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/Bidirectional.png)
 
+The deviation is getting smaller. It shows the model is better than Model 1.
+
 ## Evaluating
 
 To evaluate the model, I use MSE and RMSE.
 
-**Result**
-
-The results show improvements in both the training and testing errors:
-
-> Train Mean Absolute Error (MAE): 88.62 Rp
-
-> Test Mean Absolute Error (MAE): 127.66 Rp
-
-> Train Root Mean Squared Error (RMSE): 158.80 Rp
-
-> Test Root Mean Squared Error (RMSE): 177.12 Rp
-
-These values indicate that the bidirectional LSTM model, along with some adjustments, has enhanced the model's performance compared to earlier configurations.
-
-The Bidirectional LSTM outperforms the standard LSTM, showing both lower training and testing errors. The train-test error gap is smaller than in Model 1, suggesting better generalization. This bidirectional model captures dependencies from both past and future contexts at each time step, leading to a richer representation of the data and improved predictive performance. 
-
-**Strengths:** By processing information in both directions, this model captures forward and backward dependencies. This dual processing leads to improved accuracy, especially when complex temporal relationships exist. As evidenced by the lower errors, Bidirectional LSTM is better suited for industrial time series where both past and future patterns influence outcomes.
-
-**Weaknesses:** Bidirectional LSTM models are computationally more intensive and require more resources. They may also be harder to interpret compared to simpler models like ARIMA.
-
-
 
 # Model 3 Using ARIMA
+
+> Mean Squared Error (MSE): 19849.31
+
+> Root Mean Squared Error (RMSE): 140.89
+
+The ARIMA model has a lower RMSE than Model 1's test RMSE but does not match the accuracy of the Bidirectional LSTM model. Although ARIMA is strong for linear, seasonal, or stationary data, its performance here is weaker, likely because the dataset’s industrial context includes nonlinear and complex temporal dependencies that neural networks like LSTM are better equipped to handle.
+
+**Strengths:** ARIMA is interpretable and effective for simpler time series data with clear seasonality and linear trends. It’s computationally efficient and easy to deploy in scenarios where data relationships are simpler and more predictable.
+
+**Weaknesses:** ARIMA does not handle nonlinear dependencies well, which limits its performance in datasets with complex industrial patterns. It requires the data to be stationary, which is not always feasible in real-world applications.
 
 ## Parameter Setup with Grid Search:
 
@@ -431,6 +448,7 @@ Thiserful framework for automatic ARIMA parameter tuning, ensuring an efficient 
 
 ![ARIMA](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/ARIMA.png)
 
+The picture shows how small the deviation is. But, the line does not capture the predition price in the future. 
 
 ## Evaluating
 
@@ -441,17 +459,7 @@ pred[:min_len]: Adjusts the predictions to have the same length as actual_data, 
 
 The choice of MSE and RMSE as evaluation metrics is common in time series forecasting due to their sensitivity to large errors. RMSE, in particular, is useful for practical interpretation, as it reflects the magnitude of errors in the original unit (e.g., currency in this case) and thus provides insight into how closely the model’s predictions align with reality.
 
-**Result**
 
-> Mean Squared Error (MSE): 19849.31
-
-> Root Mean Squared Error (RMSE): 140.89
-
-The ARIMA model has a lower RMSE than Model 1's test RMSE but does not match the accuracy of the Bidirectional LSTM model. Although ARIMA is strong for linear, seasonal, or stationary data, its performance here is weaker, likely because the dataset’s industrial context includes nonlinear and complex temporal dependencies that neural networks like LSTM are better equipped to handle.
-
-**Strengths:** ARIMA is interpretable and effective for simpler time series data with clear seasonality and linear trends. It’s computationally efficient and easy to deploy in scenarios where data relationships are simpler and more predictable.
-
-**Weaknesses:** ARIMA does not handle nonlinear dependencies well, which limits its performance in datasets with complex industrial patterns. It requires the data to be stationary, which is not always feasible in real-world applications.
 
 
 # Conclusion

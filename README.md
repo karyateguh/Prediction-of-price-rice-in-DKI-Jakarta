@@ -77,13 +77,13 @@ I separate the dataset into 3 by its quality: Raw data, Clean data and Final dat
 
 ### 1. Plot Line
 
-![Plot Line](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/1.%20Plot%20Line.png)
+![Plot Line](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/image/1.%20Plot%20Line.png)
 
 There is almost no difference about beras_premium and beras_medium plot. They differ in price. 
 
 ### 2. Histogram and KDE Plot
 
-![Histogram and KDE Plot](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/2.%20Histogram%20and%20KDE%20Plot.png)
+![Histogram and KDE Plot](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/image/2.%20Histogram%20and%20KDE%20Plot.png)
 
 
 Thing that we can note from above is, beras_premium and beras_medium have simillar plot. To optimize the model, from now on, we only use beras_premium to be analyzed and trained.
@@ -96,7 +96,7 @@ In 2023, the price rice has a significant rising. While in 2024, the price rice 
 
 ### 4. Decompose Time Series
 
-![Decompose Time Series](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/4.%20Decompose%20Time%20Series.png)
+![Decompose Time Series](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/image/4.%20Decompose%20Time%20Series.png)
 
 The data has much noise. To overcome it, we will normalize the data later. 
 

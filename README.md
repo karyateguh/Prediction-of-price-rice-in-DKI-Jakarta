@@ -90,7 +90,7 @@ Thing that we can note from above is, beras_premium and beras_medium have simill
 
 ### 3. Box Plot for Outliers
 
-![Box Plot For Outliers](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/3.%20Box%20Plot%20For%20Outliers.png)
+![Box Plot For Outliers](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/image/3.%20Box%20Plot%20For%20Outliers.png)
 
 In 2023, the price rice has a significant rising. While in 2024, the price rice is in the highest point. 
 

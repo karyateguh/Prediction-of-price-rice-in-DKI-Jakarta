@@ -103,14 +103,14 @@ The data has much noise. To overcome it, we will normalize the data later.
 
 ### 5. ACF and PACF Plots
 
-![ACF and PACF Plot](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/5.%20ACF%20and%20PACF%20Plot.png) 
+![ACF and PACF Plot](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/image/5.%20ACF%20and%20PACF%20Plot.png) 
 
 The data is not stationary. 
 
 
 ### 6. Moving Average and Rolling Statistics
 
-![Moving Average and Rolling Statistics](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/6.%20Moving%20Average%20and%20Rolling%20Statistics.png)
+![Moving Average and Rolling Statistics](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/image/6.%20Moving%20Average%20and%20Rolling%20Statistics.png)
 
 It indicates that the long-term trend in the data is fairly consistent, without sharp rises or falls. So, whatever monthly pattern you see in the original data is likely stable and predictable.
 A near-zero rolling standard deviation means that the data is incredibly stable, almost without any noticeable ups or downs within each yearly period.
@@ -130,19 +130,19 @@ Critical Value 10%: -2.5682750226211546
 
 ### 8. Seasonal Plot or Heatmap for Seasonality
 
-![Seasonal Plot or Heatmap for Seasonality](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/8.%20Seasonal%20Plot%20or%20Heatmap%20for%20Seasonality.png)
+![Seasonal Plot or Heatmap for Seasonality](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/image/8.%20Seasonal%20Plot%20or%20Heatmap%20for%20Seasonality.png)
 
 The highest price is in March 2024 (17183) and April 2024 (17184). 
 
 ### 9. Lag Plot
 
-![Seasonal Plot](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/9.%20Seasonal%20Plot.png)
+![Seasonal Plot](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/image/9.%20Seasonal%20Plot.png)
 
 We have positive correlation in it.
 
 ### 10. Change Point Detection
 
-![Change Point Detection](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/10.%20Change%20Point%20Detection.png)
+![Change Point Detection](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/image/10.%20Change%20Point%20Detection.png)
 
 We have critical point in 2024 January. It is getting worst in February until April. 
 
@@ -316,7 +316,7 @@ The structure and techniques used here are well-suited for time series forecasti
 
 ## Visualizing
 
-![LSTM](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/LSTM.png)
+![LSTM](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/image/LSTM.png)
 
 The Price rice decreases in the future. But, we can see large deviations on it.
 
@@ -391,7 +391,7 @@ The predicting process is simiilar to model 1
 
 ## Visualizing
 
-![Bidirectional](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/Bidirectional.png)
+![Bidirectional](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/image/Bidirectional.png)
 
 The deviation is getting smaller. It shows the model is better than Model 1.
 
@@ -446,7 +446,7 @@ Thiserful framework for automatic ARIMA parameter tuning, ensuring an efficient 
 
 ## Visualisation
 
-![ARIMA](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/ARIMA.png)
+![ARIMA](https://github.com/karyateguh/Prediction-of-price-rice-in-DKI-Jakarta/raw/master/image/ARIMA.png)
 
 The picture shows how small the deviation is. But, the line does not capture the predition price in the future. 
 
